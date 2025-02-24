@@ -158,9 +158,6 @@ def dashboard():
 
 @app.route("/chat", methods=["GET", "POST"])
 def chat():
-    # if request.method == "GET":
-    #     return render_template("chat.html")
-
     if request.method == "POST":
         user_message = request.json.get("message", "")
 

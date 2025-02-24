@@ -1,3 +1,5 @@
+import time
+
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -5,8 +7,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
-import time
 from selenium.webdriver.common.action_chains import ActionChains
+from os import environ as env
+from dotenv import find_dotenv, load_dotenv
+
+ENV_FILE = find_dotenv()
+if ENV_FILE:
+    load_dotenv(ENV_FILE)
 
 
 def click_at_coordinates(driver, x, y):
@@ -83,7 +90,7 @@ def scrape_brightspace(username, password):
         time.sleep(2)
 
         # **Step 5: Wait for Homepage to Load**
-        WebDriverWait(driver, 8).until(EC.title_contains("Homepage - Purdue West Lafayette"))
+        WebDriverWait(driver, 10).until(EC.title_contains("Homepage - Purdue West Lafayette"))
         time.sleep(5)
         print("Logged in successfully!")
 
@@ -98,7 +105,7 @@ def scrape_brightspace(username, password):
             (500, 300),
             (800, 300),
             (200, 600),
-            # (500, 600),
+            (500, 600),
             # (800, 600)
         ]  # Python list to store clicks
 
@@ -142,4 +149,4 @@ def scrape_brightspace(username, password):
         driver.quit()
 
 # Run the scraper
-#scrape_brightspace("username", "password")
+scrape_brightspace(env.get("2FA_USERNAME"), env.get("2FA_PASSWORD"))
